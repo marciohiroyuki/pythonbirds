@@ -104,32 +104,28 @@ class Motor:
 
     def frear(self):
         self.velocidade-=2
-        if self.velocidade<0:
-            self.velocidade=0
+        self.velocidade = max(0, self.velocidade)
+
+NORTE = 'Norte'
+LESTE = 'Leste'
+SUL = 'Sul'
+OESTE = 'Oeste'
 
 class Direcao:
+    rotacao_a_direita_dct={
+        NORTE: LESTE, LESTE: SUL, SUL: OESTE, OESTE: NORTE}
+
+    rotacao_a_esquerda_dct = {
+        NORTE: OESTE, OESTE: SUL, SUL: LESTE, LESTE: NORTE}
+
     def __init__(self):
-        self.valor = 'Norte'
+        self.valor = NORTE
 
     def girar_a_direita(self):
-        if self.valor == 'Norte':
-            self.valor = 'Leste'
-        elif self.valor == 'Leste':
-            self.valor = 'Sul'
-        elif self.valor == 'Sul':
-            self.valor = 'Oeste'
-        elif self.valor == 'Oeste':
-            self.valor = 'Norte'
+        self.valor = self.rotacao_a_direita_dct[self.valor]
 
     def girar_a_esquerda(self):
-        if self.valor == 'Norte':
-            self.valor = 'Oeste'
-        elif self.valor == 'Oeste':
-            self.valor = 'Sul'
-        elif self.valor == 'Sul':
-            self.valor = 'Leste'
-        elif self.valor == 'Leste':
-            self.valor = 'Norte'
+        self.valor = self.rotacao_a_esquerda_dct[self.valor]
 
 class Carro:
     def __init__(self, direcao, motor):
